@@ -1,0 +1,18 @@
+Sistema de Punto de Venta ($USD => BsD)con los siguentes Modulos:
+
+1. Compras
+    1.1. Nueva Compra
+    1.2. Historial del Compras
+2. Ventas
+    2.1. Nueva Venta
+    2.2. Historial de Ventas
+3. Clientes (Creacion, Modificacion, Activacion y Desactivacion)
+4. Categorias (Creacion, Modificacion, Activacion y Desactivacion)
+5. Medidas (Creacion, Modificacion, Activacion y Desactivacion)
+6. Productos (Creacion, Modificacion, Activacion y Desactivacion), incluye carga de Imagenes
+7. Administracion
+    7.1. Usuarios (Creacion, Modificacion, Activacion y Desactivacion)
+    7.2. Configuracion de la Empresa con Tasa del dia Configurable
+8. Cajas
+    8.1. Cajas (Creacion, Modificacion, Activacion y Desactivacion)
+    8.2. Cierres de Caja
