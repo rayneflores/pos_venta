@@ -10,28 +10,32 @@ class AdministracionModel extends Query{
         return $data;
     }
 
-    public function modificarEmpresa(string $nombre, string $rif, string $telefono, string $direccion, string $mensaje, int $id, string $tasa) {
+    public function modificarEmpresa(string $nombre, string $rif, string $telefono, string $direccion, string $mensaje, int $id, string $tasa, string $tasa_bcv) {
         $sql = "UPDATE configuracion SET nombre = ?, rif = ?, telefono = ?, direccion = ?, mensaje = ? WHERE id = ?";
         $datos = array($nombre, $rif, $telefono, $direccion, $mensaje, $id);
         $data = $this->save($sql, $datos);
         if($data == 1) {
-            $tasaAnt = $this->getTasa();
-            if(empty($tasaAnt)) {
-                $sql = "INSERT INTO tasa (factor) VALUES (?)";
-                $datos = array($tasa);
+            $tasas = $this->getTasa();
+            $tasaAnt = $tasas['factor'];
+            $tasaBcvAnt = $tasas['factor_bcv'];
+            if(empty($tasaAnt) || empty($tasaBcvAnt)) {
+                $sql = "INSERT INTO tasa (factor, factor_bcv) VALUES (?,?)";
+                $datos = array($tasa, $tasa_bcv);
                 $data = $this->save($sql, $datos);
                 if($data == 1) {
                     $_SESSION['tasa'] = $tasa;
+                    $_SESSION['tasa_bcv'] = $tasa_bcv;
                     $res = "ok";
                 } else {
                     $res = "error";
                 }
             } else {
-                $sql = "UPDATE tasa SET factor = ? WHERE fecha > CURDATE()";
-                $datos = array($tasa);
+                $sql = "UPDATE tasa SET factor = ?, factor_bcv = ? WHERE fecha > CURDATE()";
+                $datos = array($tasa, $tasa_bcv);
                 $data = $this->save($sql, $datos);
                 if($data == 1) {
                     $_SESSION['tasa'] = $tasa;
+                    $_SESSION['tasa_bcv'] = $tasa_bcv;
                     $res = "ok";
                 } else {
                     $res = "error";
@@ -68,13 +72,13 @@ class AdministracionModel extends Query{
     }
 
     public function getTasa() {
-        $sql = "SELECT factor as factor FROM tasa where fecha > CURDATE()";
+        $sql = "SELECT factor as factor, factor_bcv as factor_bcv FROM tasa where fecha > CURDATE()";
         $data = $this->select($sql);
         return $data;
     }
 
     public function getTasaAnterior() {
-        $sql = "SELECT factor as factor FROM tasa where fecha > CURDATE() - 1";
+        $sql = "SELECT factor as factor, factor_bcv as factor_bcv FROM tasa where fecha > CURDATE() - 1";
         $data = $this->select($sql);
         return $data;
     }

@@ -31,10 +31,16 @@
                     <label for="direccion">Direccion</label>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-floating mb-3">
                     <input type="text" name="tasa" id="tasa" class="form-control" placeholder="Tasa del Dia" value="<?php echo $data['tasa']['factor']; ?>">
                     <label for="tasa">Tasa del Dia</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-floating mb-3">
+                    <input type="text" name="tasa_bcv" id="tasa_bcv" class="form-control" placeholder="Tasa del Dia (BCV)" value="<?php echo $data['tasa']['factor_bcv']; ?>">
+                    <label for="tasa_bcv">Tasa del Dia (BCV)</label>
                 </div>
             </div>
             <div class="col-md-6">

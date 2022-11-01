@@ -459,23 +459,47 @@ INSERT INTO `tasa` (`id`, `fecha`, `factor`) VALUES
 --
 DROP TRIGGER IF EXISTS `alter_precios`;
 DELIMITER $$
-CREATE TRIGGER `alter_precios` AFTER UPDATE ON `tasa` FOR EACH ROW BEGIN
+CREATE TRIGGER `alter_precios` AFTER UPDATE ON `tasa`
+ FOR EACH ROW BEGIN
 DECLARE nueva_tasa decimal(10,2);
 SET nueva_tasa = new.factor;
-UPDATE productos SET precio_compra_bolos = (nueva_tasa * precio_compra), precio_venta_bolos = (precio_venta * nueva_tasa);
-END
-$$
-DELIMITER ;
-DROP TRIGGER IF EXISTS `alter_precios_2`;
-DELIMITER $$
-CREATE TRIGGER `alter_precios_2` AFTER INSERT ON `tasa` FOR EACH ROW BEGIN
-DECLARE nueva_tasa decimal(10,2);
-SET nueva_tasa = new.factor;
-UPDATE productos SET precio_compra_bolos = (nueva_tasa * precio_compra), precio_venta_bolos = (precio_venta * nueva_tasa);
+UPDATE productos SET precio_compra_bolos = (nueva_tasa * precio_compra), precio_venta_bolos = (precio_venta * nueva_tasa) WHERE id_categoria <> 5;
 END
 $$
 DELIMITER ;
 
+DROP TRIGGER IF EXISTS `alter_precios_2`;
+DELIMITER $$
+CREATE TRIGGER `alter_precios_2` AFTER INSERT ON `tasa`
+ FOR EACH ROW BEGIN
+DECLARE nueva_tasa decimal(10,2);
+SET nueva_tasa = new.factor;
+UPDATE productos SET precio_compra_bolos = (nueva_tasa * precio_compra), precio_venta_bolos = (precio_venta * nueva_tasa) WHERE id_categoria <> 5;
+END
+$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS `alter_precios_polar`;
+DELIMITER $$
+CREATE TRIGGER `alter_precios_polar` AFTER INSERT ON `tasa`
+ FOR EACH ROW BEGIN
+DECLARE nueva_tasa decimal(10,2);
+SET nueva_tasa = new.factor_bcv;
+UPDATE productos SET precio_compra_bolos = (nueva_tasa * precio_compra), precio_venta_bolos = (precio_venta * nueva_tasa) WHERE id_categoria = 5;
+END
+$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS `alter_precios_2_polar`;
+DELIMITER $$
+CREATE TRIGGER `alter_precios_2_polar` AFTER UPDATE ON `tasa`
+ FOR EACH ROW BEGIN
+DECLARE nueva_tasa decimal(10,2);
+SET nueva_tasa = new.factor_bcv;
+UPDATE productos SET precio_compra_bolos = (nueva_tasa * precio_compra), precio_venta_bolos = (precio_venta * nueva_tasa) WHERE id_categoria = 5;
+END
+$$
+DELIMITER ;
 -- --------------------------------------------------------
 
 --

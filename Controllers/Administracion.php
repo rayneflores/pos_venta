@@ -46,7 +46,8 @@
             $mensaje = $_POST['mensaje'];
             $id = $_POST['id'];
             $tasa = $_POST['tasa'];
-            $data = $this->model->modificarEmpresa($nombre, $rif, $telefono, $direccion, $mensaje, $id, $tasa);
+            $tasa_bcv = $_POST['tasa_bcv'];
+            $data = $this->model->modificarEmpresa($nombre, $rif, $telefono, $direccion, $mensaje, $id, $tasa, $tasa_bcv);
             if ($data == 'ok') {
                 $msg = array('msg' => 'Los Datos fueron Modificados', 'icono' => 'success');
             } else {

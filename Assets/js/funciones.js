@@ -1233,7 +1233,6 @@ function modificarEmpresa() {
             const res = JSON.parse(this.responseText);
             alertas(res.msg, res.icono);
         }
-        
     }
 }
 
