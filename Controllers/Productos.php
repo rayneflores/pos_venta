@@ -24,7 +24,7 @@ class Productos extends Controller{
     public function listar(){
         $data = $this->model->getProductos();
         for ($i=0; $i < count($data); $i++) { 
-            $data[$i]['imagen'] = '<img class="img-thumbnail" src= "'. base_url . "Assets/img/" . $data[$i]['foto'] .'">';
+            $data[$i]['imagen'] = '<img class="img-thumbnail" src= "'. base_url ."Assets/img/". $data[$i]['foto'].'" width="100">';
             if ($data[$i]['estado'] == 1) {
                 $data[$i]['estado'] = '<span class="badge bg-success">Activo</span>';
                 $data[$i]['acciones'] = '<div>
@@ -75,7 +75,7 @@ class Productos extends Controller{
                         if (!empty($name)) {
                             move_uploaded_file($tmpName, $destino);
                         }
-                        $msg = array('msg' => 'Producto registrado con éxito ' . $tasa, 'icono' => 'success');
+                        $msg = array('msg' => 'Producto registrado con éxito', 'icono' => 'success');
                         
                     }else if($data == "existe"){
                         $msg = array('msg' => 'El Producto ya existe', 'icono' => 'warning');
@@ -94,7 +94,7 @@ class Productos extends Controller{
                         if (!empty($name)) {
                             move_uploaded_file($tmpName, $destino);
                         }
-                        $msg = array('msg' => 'Producto modificado con éxito ' . $tasa, 'icono' => 'success');
+                        $msg = array('msg' => 'Producto modificado con éxito', 'icono' => 'success');
                     }else {
                         $msg = array('msg' => 'Error al modificar el Producto', 'icono' => 'error');
                     }

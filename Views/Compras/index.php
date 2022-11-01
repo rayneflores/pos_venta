@@ -1,6 +1,6 @@
 <?php include "Views/Templates/header.php"; ?>
 <div class="card mt-4">
-    <div class="card-header bg-primary text-white">
+    <div class="card-header bg-dark text-white">
         <h4>Nueva Compra</h4>
     </div>
     .<div class="card">
