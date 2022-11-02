@@ -796,6 +796,7 @@ function registrarPro(e) {
         http.send(new FormData(frm));
         http.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+                
                 const res = JSON.parse(this.responseText);
                 $("#nuevo_producto").modal("hide");
                 alertas(res.msg, res.icono);
@@ -910,7 +911,7 @@ function deleteImg() {
     document.getElementById("icon-image").classList.remove("d-none");
     document.getElementById("img-preview").src = '';
     document.getElementById("imagen").value = '';
-    document.getElementById("foto_delete").value = res.foto;
+    document.getElementById("foto_delete").value = '';
 }
 
 function buscarCodigoCompras(e) {
