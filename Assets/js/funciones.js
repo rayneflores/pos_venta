@@ -1230,10 +1230,10 @@ function modificarEmpresa() {
     http.open("POST", url, true);
     http.send(new FormData(frm));
     http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            const res = JSON.parse(this.responseText);
-            alertas(res.msg, res.icono);
-        }
+    if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+        alertas(res.msg, res.icono);
+    }
     }
 }
 
