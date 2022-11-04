@@ -917,8 +917,8 @@ function deleteImg() {
 function buscarCodigoCompras(e) {
     e.preventDefault();
     const codigo = document.getElementById("codigo").value;
-    // if (e.which == 13) { TODO: Si quiero que responda solo a Enter
-        if (codigo != "") {
+    if (e.which == 13) { //TODO: Si quiero que responda solo a Enter
+        /*if (codigo != "") {*/
             const url = base_url + "Compras/buscarCodigoCompras/" + codigo;
             const http = new XMLHttpRequest();
             http.open("GET", url, true);
@@ -940,10 +940,10 @@ function buscarCodigoCompras(e) {
                     }
                 }
             }
-        } else {
+        /* } else {
             alertas('Ingrese el Codigo', 'warning');
             document.getElementById("cantidad").value = '';
-            document.getElementById("codigo").focus();
+            document.getElementById("codigo").focus(); */
         }
     //} Fin TODO 
 }
@@ -1068,8 +1068,8 @@ function generarCompra() {
 function buscarCodigoVentas(e) {
     e.preventDefault();
     const codigo = document.getElementById("codigo").value;
-    // if (e.which == 13) { TODO: Si quiero que responda solo a Enter
-    if (codigo != "") {
+    if (e.which == 13) { //TODO: Si quiero que responda solo a Enter
+    /*if (codigo != "") {*/
         const url = base_url + "Ventas/buscarCodigoVentas/" + codigo;
         const http = new XMLHttpRequest();
         http.open("GET", url, true);
@@ -1091,10 +1091,10 @@ function buscarCodigoVentas(e) {
                 }
             }
         }
-    } else {
+    /*} else {
         alertas('Ingrese el Codigo', 'warning');
         document.getElementById("cantidad").value = '';
-        document.getElementById("codigo").focus();
+        document.getElementById("codigo").focus();*/
     }
     //} Fin TODO
 }
