@@ -17,7 +17,7 @@ class ComprasModel extends Query{
         return $data;
     }
 
-    public function registrarDetalleCompras(int $id_producto, int $id_usuario, string $precio, string $precio_bolos, int $cantidad, string $sub_total, string $sub_total_bolos) {
+    public function registrarDetalleCompras(int $id_producto, int $id_usuario, string $precio, string $precio_bolos, string $cantidad, string $sub_total, string $sub_total_bolos) {
         $sql = "INSERT INTO detalle (id_producto, id_usuario, precio, precio_bolos, cantidad, sub_total, sub_total_bolos) VALUES (?,?,?,?,?,?,?)";
         $datos = array($id_producto, $id_usuario, $precio, $precio_bolos, $cantidad, $sub_total, $sub_total_bolos);
         $data = $this->save($sql, $datos);
@@ -59,7 +59,7 @@ class ComprasModel extends Query{
         return $data;
     }
 
-    public function actualizarDetalleCompra(string $precio, string $precio_bolos, int $cantidad, string $sub_total, string $sub_total_bolos, int $id_producto, int $id_usuario) {
+    public function actualizarDetalleCompra(string $precio, string $precio_bolos, string $cantidad, string $sub_total, string $sub_total_bolos, int $id_producto, int $id_usuario) {
         $sql = "UPDATE detalle SET precio = ?, precio_bolos = ?, cantidad = ?, sub_total = ?, sub_total_bolos = ? WHERE id_producto = ? AND id_usuario = ?";
         $datos = array($precio, $precio_bolos, $cantidad, $sub_total, $sub_total_bolos, $id_producto, $id_usuario);
         $data = $this->save($sql, $datos);
