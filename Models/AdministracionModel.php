@@ -16,10 +16,8 @@ class AdministracionModel extends Query{
         $data = $this->save($sql, $datos);
         if($data == 1) {
             $tasas = $this->getTasa();
-            $tasaAnt = $tasas['factor'];
-            $tasaBcvAnt = $tasas['factor_bcv'];
-            if(empty($tasaAnt) || empty($tasaBcvAnt)) {
-                $sql = "INSERT INTO tasa (factor, factor_bcv) VALUES (?,?)";
+            if (is_array($tasas)) {
+                $sql = "UPDATE tasa SET factor = ?, factor_bcv = ? WHERE fecha > CURDATE()";
                 $datos = array($tasa, $tasa_bcv);
                 $data = $this->save($sql, $datos);
                 if($data == 1) {
@@ -30,7 +28,7 @@ class AdministracionModel extends Query{
                     $res = "error";
                 }
             } else {
-                $sql = "UPDATE tasa SET factor = ?, factor_bcv = ? WHERE fecha > CURDATE()";
+                $sql = "INSERT INTO tasa (factor, factor_bcv) VALUES (?,?)";
                 $datos = array($tasa, $tasa_bcv);
                 $data = $this->save($sql, $datos);
                 if($data == 1) {

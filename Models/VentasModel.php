@@ -101,7 +101,7 @@ class VentasModel extends Query{
         return $data;
     }
 
-    public function registrarDetalleVenta(int $id_venta, int $id_producto, int $cantidad, string $precio, string $precio_bolos, string $sub_total, string $sub_total_bolos, string $fecha) {
+    public function registrarDetalleVenta(int $id_venta, int $id_producto, string $cantidad, string $precio, string $precio_bolos, string $sub_total, string $sub_total_bolos, string $fecha) {
         $sql = "INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio, precio_bolos, sub_total, sub_total_bolos, fecha) VALUES (?,?,?,?,?,?,?,?)";
         $datos = array($id_venta, $id_producto, $cantidad, $precio, $precio_bolos, $sub_total, $sub_total_bolos, $fecha);
         $data = $this->save($sql, $datos);
