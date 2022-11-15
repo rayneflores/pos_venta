@@ -158,7 +158,7 @@ class Ventas extends Controller {
         $productos = $this->model->getProVenta($id_venta);
         require('Libraries/fpdf/fpdf.php');
 
-        $pdf = new FPDF('P', 'mm', array(80, 200));
+        $pdf = new FPDF('P', 'mm', array(94, 200));
         $pdf->addPage();
         $pdf->setMargins(5, 0, 0);
         
@@ -194,18 +194,18 @@ class Ventas extends Controller {
         //Encabezados de Cliente
         $pdf->SetFillColor(0, 0, 0);
         $pdf->SetTextColor(255, 255, 255);
-        $pdf->setFont('Arial', 'B', 7);
+        $pdf->setFont('Arial', 'B', 6);
         $pdf->Cell(20, 5, 'Nombre', 0, 0, 'L', true);
         $pdf->Cell(20, 5, 'Telefono', 0, 0, 'L', true);
-        $pdf->Cell(30, 5, 'Direccion', 0, 1, 'L', true);
+        $pdf->Cell(44, 5, 'Direccion', 0, 1, 'L', true);
         
         //Datos del Cliente
         $cliente = $this->model->getCliente($id_venta); 
-        $pdf->setFont('Arial', '', 7);
+        $pdf->setFont('Arial', '', 6);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Cell(20, 5, utf8_decode($cliente['nombre']), 0, 0, 'L');
         $pdf->Cell(20, 5, $cliente['telefono'], 0, 0, 'L');
-        $pdf->MultiCell(30, 5, utf8_decode($cliente['direccion']));
+        $pdf->MultiCell(44, 5, utf8_decode($cliente['direccion']));
 
         $pdf->Ln();
 
@@ -213,25 +213,36 @@ class Ventas extends Controller {
         $pdf->SetFillColor(0, 0, 0);
         $pdf->SetTextColor(255, 255, 255);
         $pdf->Cell(10, 5, 'Cant', 0, 0, 'L', true);
-        $pdf->Cell(35, 5, 'Descripcion', 0, 0, 'L', true);
-        $pdf->Cell(10, 5, 'Precio', 0, 0, 'L', true);
-        $pdf->Cell(15, 5, 'SubTotal', 0, 1, 'L', true);
+        $pdf->Cell(34, 5, 'Descripcion', 0, 0, 'L', true);
+        $pdf->Cell(8, 5, 'Precio $', 0, 0, 'R', true);
+        $pdf->Cell(12, 5, 'STotal $', 0, 0, 'L', true);
+        $pdf->Cell(8, 5, 'Precio B', 0, 0, 'R', true);
+        $pdf->Cell(12, 5, 'STotal B', 0, 1, 'R', true);
         
         //Productos en la Venta
         $pdf->SetTextColor(0, 0, 0);
         $total = 0.00;
+        $total_bolos = 0.00;
         foreach($productos as $row) {
             $total += $row['sub_total'];
+            $total_bolos += $row['sub_total_bolos'];
             $pdf->Cell(10, 5, $row['cantidad'], 0, 0, 'C');
             $pdf->Cell(35, 5, utf8_decode($row['descripcion']), 0, 0, 'L');
-            $pdf->Cell(10, 5, $row['precio'], 0, 0, 'R');
-            $pdf->Cell(15, 5, number_format($row['sub_total'], 2, ',', '.'), 0, 1, 'R');
+            $pdf->Cell(8, 5, $row['precio'], 0, 0, 'R');
+            $pdf->Cell(12, 5, number_format($row['sub_total'], 2, ',', '.'), 0, 0, 'L');
+            $pdf->Cell(8, 5, $row['precio_bolos'], 0, 0, 'R');
+            $pdf->Cell(12, 5, number_format($row['sub_total_bolos'], 2, ',', '.'), 0, 1, 'R');
         }
         
         // Total de la Venta
         $pdf->Ln();
-        $pdf->Cell(70, 5, 'Total a Pagar:', 0, 1, 'R');
-        $pdf->Cell(70, 5, number_format($total, 2, ',', '.'), 0, 0, 'R');
+        $pdf->setFont('Arial', 'B', 7);
+        $pdf->Cell(60, 5, 'Total a Pagar $:', 0, 0, 'R');
+        $pdf->Cell(25, 5, 'Total a Pagar Bs:', 0, 1, 'R');
+        $pdf->setFont('Arial', '', 7);
+        $pdf->Cell(60, 5, number_format($total, 2, ',', '.'), 0, 0, 'R');
+        $pdf->Cell(25, 5, number_format($total_bolos, 2, ',', '.'), 0, 0, 'R');
+        $pdf->Ln();
         $pdf->Ln();
         $pdf->Cell(0, 0, utf8_decode($empresa['mensaje']), 0, 0, 'C');
         $pdf->Output();
