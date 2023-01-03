@@ -61,15 +61,11 @@ class Productos extends Controller{
             if (empty($codigo) || empty($descripcion) || empty($precio_compra) || empty($precio_venta)) {
                 $msg = array('msg' => 'Todo los campos son obligatorios', 'icono' => 'warning');
             }else{
-                if (!empty($name)) {
-                    $imgNombre = $name;
-                } else if(!empty($_POST['foto_actual']) && empty($name)) {
-                    $imgNombre = $_POST['foto_actual'];
-                } else {
-                    $imgNombre = "default.jpg";
+                if (empty($name)) {
+                    $name = "default.jpg";
                 }
                 if ($id == "") {
-                    $data = $this->model->registrarProducto($codigo, $descripcion, $precio_compra, $precio_venta, $medida, $categoria, $imgNombre, $tasa);
+                    $data = $this->model->registrarProducto($codigo, $descripcion, $precio_compra, $precio_venta, $medida, $categoria, $name, $tasa);
                     if ($data == "ok") {
                         move_uploaded_file($tmpName, $destino);
                         $msg = array('msg' => 'Producto registrado con éxito', 'icono' => 'success');
@@ -79,13 +75,14 @@ class Productos extends Controller{
                         $msg = array('msg' => 'Error al registrar el Producto', 'icono' => 'error');
                     }
                 }else{
-                    $img_delete = $this->model->editarPro($id);
                     if ($_POST['foto_actual'] != $_POST['foto_delete']) {
-                        if (file_exists("Assets/img/" . $img_delete['foto']) && $img_delete != "default.jpg") {
-                            unlink("Assets/img/" . $img_delete['foto']);
-                            $imgNombre = "default.jpg";
+                        $img_delete = $this->model->editarPro($id);
+                        if($img_delete['foto'] != "default.jpg" || $img_delete['foto'] != "") {
+                            if (file_exists($destino . $img_delete['foto'])) {
+                                unlink($destino . $img_delete['foto']);
+                            }
                         }
-                        $data = $this->model->modificarProducto($codigo, $descripcion, $precio_compra, $precio_venta, $medida, $categoria, $imgNombre, $tasa, $id);
+                        $data = $this->model->modificarProducto($codigo, $descripcion, $precio_compra, $precio_venta, $medida, $categoria, $name, $tasa, $id);
                         if ($data == "modificado") {
                             move_uploaded_file($tmpName, $destino);
                             $msg = array('msg' => 'Producto modificado con éxito', 'icono' => 'success');
